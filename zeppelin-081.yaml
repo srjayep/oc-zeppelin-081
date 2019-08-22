@@ -41,7 +41,7 @@ objects:
       spec:
         containers:
           - name: zeppelin-081
-            image: mattf/openshift-zeppelin
+            image: pothus0718/oc-zeppelin-081
             ports:
               - name: zeppelin-081
                 protocol: TCP
