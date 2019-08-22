@@ -16,6 +16,10 @@ WORKDIR /opt/zeppelin
 
 COPY launch.sh bin
 
-RUN chmod 755 -R .
+RUN mkdir -p /opt/zeppelin/logs
+RUN mkdir -p /opt/zeppelin/run
+
+RUN chmod 755 -R /opt/zeppelin 
+RUN chmod 777 -R /opt/zeppelin/bin
 
 CMD ["/opt/zeppelin/bin/launch.sh"]
