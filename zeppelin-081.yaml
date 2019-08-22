@@ -20,6 +20,20 @@ objects:
     selector:
       name: zeppelin-081
 
+- kind: Route
+  apiVersion: v1
+  metadata:
+    name: zeppelin-081
+    labels:
+      app: zeppelin-081
+      name: zeppelin-081
+  spec:
+    host:
+    port:
+      targetPort: 8080
+    tls:
+      termination: edge
+
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
@@ -46,15 +60,3 @@ objects:
               - name: zeppelin-081
                 protocol: TCP
                 containerPort: 8080
-- kind: Route
-  apiVersion: v1
-  metadata:
-    name: zeppelin-081
-    labels:
-      name: zeppelin-081
-  spec:
-    host:
-    port:
-      targetPort: 8080
-    tls:
-      termination: edge
