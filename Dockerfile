@@ -21,5 +21,7 @@ RUN mkdir -p /opt/zeppelin/run
 
 RUN chmod 755 -R /opt/zeppelin 
 RUN chmod 777 -R /opt/zeppelin/bin
+RUN chmod 777 -R /opt/zeppelin/logs
+RUN chmod 777 -R /opt/zeppelin/run
 
 CMD ["/opt/zeppelin/bin/launch.sh"]
