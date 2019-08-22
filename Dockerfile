@@ -14,14 +14,14 @@ RUN cd /opt && \
 
 WORKDIR /opt/zeppelin
 
-COPY launch.sh bin
+#COPY launch.sh bin
 
 RUN mkdir -p /opt/zeppelin/logs
 RUN mkdir -p /opt/zeppelin/run
 
-RUN chmod 755 -R /opt/zeppelin 
 RUN chmod 777 -R /opt/zeppelin/bin
-RUN chmod 777 -R /opt/zeppelin/logs
-RUN chmod 777 -R /opt/zeppelin/run
+#RUN chmod 777 -R /opt/zeppelin/logs
+#RUN chmod 777 -R /opt/zeppelin/run
 
-CMD ["/opt/zeppelin/bin/launch.sh"]
+#CMD ["/opt/zeppelin/bin/launch.sh"]
+CMD ./bin/zeppelin.sh run
