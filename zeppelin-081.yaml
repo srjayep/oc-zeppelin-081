@@ -55,7 +55,7 @@ objects:
       spec:
         containers:
           - name: zeppelin-081
-            image: pothus0718/oc-zeppelin-081
+            image: pothus0718/oc-zeppelin-081:latest
             ports:
               - name: zeppelin-081
                 protocol: TCP
