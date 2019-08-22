@@ -1,0 +1,60 @@
+kind: Template
+apiVersion: v1
+template: zeppelin-081
+metadata:
+  name: zeppelin-081
+objects:
+
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: zeppelin-081
+    labels:
+      name: zeppelin-081
+  spec:
+    ports:
+      - name: zeppelin-081
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+    selector:
+      name: zeppelin-081
+
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: zeppelin-081
+    labels:
+      name: zeppelin-081
+  spec:
+    strategy:
+      type: Rolling
+    triggers:
+      - type: ConfigChange
+    replicas: 1
+    selector:
+      name: zeppelin-081
+    template:
+      metadata:
+        labels:
+          name: zeppelin-081
+      spec:
+        containers:
+          - name: zeppelin-081
+            image: mattf/openshift-zeppelin
+            ports:
+              - name: zeppelin-081
+                protocol: TCP
+                containerPort: 8080
+- kind: Route
+  apiVersion: v1
+  metadata:
+    name: zeppelin-081
+    labels:
+      name: zeppelin-081
+  spec:
+    host:
+    port:
+      targetPort: 8080
+    tls:
+      termination: edge
