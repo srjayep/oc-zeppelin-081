@@ -1,27 +1,18 @@
-FROM centos:latest
-
+FROM       alpine:3.8
 MAINTAINER Sree Pothula
-
-RUN yum install -y epel-release tar java && \
-    yum clean all
-
-RUN yum install -y nss_wrapper && yum clean all
-
-RUN cd /opt && \
-    curl https://archive.apache.org/dist/zeppelin/zeppelin-0.8.1/zeppelin-0.8.1-bin-all.tgz | \
-       tar -zx && \
-    ln -s zeppelin-0.8.1-bin-all zeppelin
-
-WORKDIR /opt/zeppelin
-
-#COPY launch.sh bin
-
-RUN mkdir -p /opt/zeppelin/logs
-RUN mkdir -p /opt/zeppelin/run
-
-RUN chmod 777 -R /opt/zeppelin/bin
-#RUN chmod 777 -R /opt/zeppelin/logs
-#RUN chmod 777 -R /opt/zeppelin/run
-
-#CMD ["/opt/zeppelin/bin/launch.sh"]
-CMD ./bin/zeppelin.sh run
+ARG        DIST_MIRROR=http://archive.apache.org/dist/zeppelin
+ARG        VERSION=0.8.0
+ENV        ZEPPELIN_HOME=/opt/zeppelin \
+           JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk \
+           PATH=$PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
+RUN        apk add --no-cache bash curl jq openjdk8 && \
+           mkdir -p ${ZEPPELIN_HOME} && \
+           curl ${DIST_MIRROR}/zeppelin-${VERSION}/zeppelin-${VERSION}-bin-all.tgz | tar xvz -C ${ZEPPELIN_HOME} && \
+           mv ${ZEPPELIN_HOME}/zeppelin-${VERSION}-bin-all/* ${ZEPPELIN_HOME} && \
+           rm -rf ${ZEPPELIN_HOME}/zeppelin-${VERSION}-bin-all && \
+           rm -rf *.tgz
+EXPOSE     8080 8443
+VOLUME     ${ZEPPELIN_HOME}/logs \
+           ${ZEPPELIN_HOME}/notebook
+WORKDIR    ${ZEPPELIN_HOME}
+CMD        ./bin/zeppelin.sh run
